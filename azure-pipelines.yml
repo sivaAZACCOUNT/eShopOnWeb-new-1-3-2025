@@ -62,5 +62,5 @@ stages:
               ConnectionType: AzureRM
               azureSubscription: myown-svc
               appType: webApp
-              WebAppName: 'satyaisksln'
+              WebAppName: 'sivaappserv'
               packageForLinux: '$(Build.ArtifactStagingDirectory)/**/Web.zip'
