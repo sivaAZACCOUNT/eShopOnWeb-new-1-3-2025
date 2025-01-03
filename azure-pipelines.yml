@@ -44,3 +44,23 @@ stages:
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
               ArtifactName: sampleapp
+  - stage: Deployment
+    displayName: Dev-Env
+    jobs:
+      - job: Deploy
+        pool:
+          vmImage: 'windows-latest'
+        steps:
+          - task: DownloadBuildArtifacts@1
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'sampleapp'
+              downloadPath: '$(Build.ArtifactStagingDirectory)'
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: AzureRM
+              azureSubscription: myown-svc
+              appType: webApp
+              WebAppName: 'satyaisksln'
+              packageForLinux: '$(Build.ArtifactStagingDirectory)/**/Web.zip'
